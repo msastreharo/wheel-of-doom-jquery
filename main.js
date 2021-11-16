@@ -4,25 +4,39 @@ $(document).ready(function() {
     let namesAlreadyPicked = [];
 
     let buttonToChooseCoders = $('.buttonToChooseCoders');
+    let restartButton = $('.restartButton');
     let winnerSection = $('.winnerSection');
     let availableCoders = $('.availableCoders');
 
-    availableCoders.html(coderArray.slice().join("<div></div>"));
-
-
-    function chooseCoder() {
-        let winner = coderArray[Math.floor(Math.random() * coderArray.length)];
-        winnerSection.html(winner);
-        namesAlreadyPicked.push(winner);
-        coderArray.splice(winner, 1);
-        updateList();
+    function showCoders() {
+        availableCoders.html(coderArray.map(coder => `<div>${coder}</div>`));
+        restartButton.hide();
     }
 
-    function updateList(winner) {
-        availableCoders.html(coderArray.slice().join("<div></div>"));
+    showCoders();
+
+    function chooseCoder() {
+        let position = Math.floor(Math.random() * coderArray.length);
+        let winner = coderArray[position];
+        winnerSection.html(winner);
+        namesAlreadyPicked.push(winner);
+        coderArray.splice(position, 1);
+        showCoders();
+        if (coderArray.length === 0) {
+            restartButton.show();
+            buttonToChooseCoders.hide();
+            winnerSection.empty();            
+        }
+    }
+
+    function restart() {
+        coderArray = namesAlreadyPicked.sort();
+        namesAlreadyPicked = [];
+        showCoders();
+        buttonToChooseCoders.show();
     }
     
     buttonToChooseCoders.on("click", chooseCoder);
-
+    restartButton.on("click", restart);
 
 });
