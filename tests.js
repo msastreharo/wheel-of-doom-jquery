@@ -2,14 +2,14 @@ const chai = window.chai
 const expect = chai.expect
 
 describe('Wheel of Doom', () => {
-  it('test que tiene que fallar', () => {
+  it('puedo elegir candidatas aleatoriamente y las quito de la lista', () => {
 
-    
-    expect(true).to.equal(false);
-  })
-  it('test que tiene que pasar', () => {
+    let coders = ["Carmen", "Valentina", "Desi"];
+    let position = 1;
 
-    
-    expect(true).to.equal(true);
+    let coder = seleccionarCoder(coders, position);
+
+    expect(coder).to.equal("Valentina")
+    expect(coders).to.have.same.members(["Carmen", "Desi"])
   })
 })
