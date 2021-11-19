@@ -1,12 +1,33 @@
-const chai = window.chai;
-const expect = chai.expect;
+const chai = window.chai
+const expect = chai.expect
 
-describe("Wheel of Doom", () => {
-    it("El array de coders tiene 24 coders al principio", () => {
-        let coderArray = ["Alexia", "Alisa", "Ana C.", "Anna G.", "Candy", "Carmen", "Desirée", "Faby", "Gabrielle", "Gràcia", "Helen", "Joana", "Judith", "Kristina", "Laura C.", "Laura M.", "Marisa", "Rosa", "Sandra", "Sara", "Sonia", "Tamara", "Valentina", "Yuliya"];
+describe('Wheel of Doom', () => {
 
-        expect(coderArray.length).to.equal(24);
-    })
 
-    it("Puedo elegir candidatas aleatoriamente y sacarlas de la lista", () )
+  it ("Al comenzar mostramos todas las coders", () => {
+    let wheelOfDoom = new WheelOfDoom(["Carmen", "Valentina", "Desi"]);
+
+    expect(wheelOfDoom.remainingCoders()).to.have.same.members(["Carmen", "Valentina", "Desi"])
+  })
+
+  it("Cuando elijo una coder, se quita de la lista", () => {  
+    let wheelOfDoom = new WheelOfDoom(["Carmen", "Valentina", "Desi"]);
+
+    let coder = wheelOfDoom.chooseCoder()
+
+    expect(wheelOfDoom.remainingCoders()).not.to.include(coder)
+    expect(wheelOfDoom.remainingCoders()).to.have.lengthOf(2)
+  })
+
+  it("Cuando hago restart de la wheel of Doom, se recarga la lista original de coders", () => {
+    let wheelOfDoom = new WheelOfDoom(["Carmen", "Valentina", "Desi"]);
+
+    wheelOfDoom.chooseCoder();
+    wheelOfDoom.restart();
+
+    expect(wheelOfDoom.remainingCoders()).to.have.same.members(["Carmen", "Valentina", "Desi"])
+  })
+
+
+
 })
