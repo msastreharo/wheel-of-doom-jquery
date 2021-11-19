@@ -1,46 +1,42 @@
 
 
 
-function seleccionarCoder(listaDeCoders, position) {
-    let elegida = listaDeCoders.splice(position,1)[0];
-    
-    return elegida;
-}
-
-
-$(document).ready(function() {
+$(document).ready(function () {
 
     let coderArray = ["Alexia", "Alisa", "Ana C.", "Anna G.", "Candy", "Carmen", "Desirée", "Faby", "Gabrielle", "Gràcia", "Helen", "Joana", "Judith", "Kristina", "Laura C.", "Laura M.", "Marisa", "Rosa", "Sandra", "Sara", "Sonia", "Tamara", "Valentina", "Yuliya"];
-    let namesAlreadyPicked = [];
+
+    let wheelOfDoom = new WheelOfDoom(coderArray);
 
     let buttonToChooseCoders = $('.buttonToChooseCoders');
     let restartButton = $('.restartButton');
     let winnerSection = $('.winnerSection');
     let availableCoders = $('.availableCoders');
 
-    function showCoders() {
-        availableCoders.html(coderArray.map(coder => `<div>${coder}</div>`));
+    function showCoders(coders) {
+        availableCoders.html(coders.map(coder => `<div>${coder}</div>`));
         restartButton.hide();
     }
 
-    showCoders();
+    showCoders(wheelOfDoom.remainingCoders());
 
-    function chooseCoder() {
-        let position = Math.floor(Math.random() * coderArray.length);
-
-        let winner = seleccionarCoder( coderArray, position);
-
-        winnerSection.html(winner);
-        
-        namesAlreadyPicked.push(winner);
-        
-        showCoders();
-        if (coderArray.length === 0) {
-            restartButton.show();
-            buttonToChooseCoders.hide();
-            winnerSection.empty();            
+    buttonToChooseCoders.on("click", () => {
+        winnerSection.html(wheelOfDoom.chooseCoder());
+        showCoders(wheelOfDoom.remainingCoders());
+        if (wheelOfDoom.remainingCoders().length === 0) {
+            buttonToChooseCoders.hide()
+            restartButton.show()
         }
-    }
+    });
+
+    restartButton.on("click", () => {
+        wheelOfDoom.restart()
+        winnerSection.empty()
+        showCoders(wheelOfDoom.remainingCoders());
+        buttonToChooseCoders.show()
+        restartButton.hide()
+    });
+
+
 
     function restart() {
         coderArray = namesAlreadyPicked.sort();
@@ -48,8 +44,7 @@ $(document).ready(function() {
         showCoders();
         buttonToChooseCoders.show();
     }
-    
-    buttonToChooseCoders.on("click", chooseCoder);
-    restartButton.on("click", restart);
+
+
 
 });

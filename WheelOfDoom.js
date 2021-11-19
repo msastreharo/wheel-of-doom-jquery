@@ -1,11 +1,12 @@
 class WheelOfDoom {
     constructor(coders) {
         this.coders = coders;
-        this.originalCoders = coders;
+        this.originalCoders = [...coders];
     }
 
     chooseCoder() {
-        let position = Math.floor(Math.random*this.coders.length)
+        let position = Math.floor(Math.random()*this.coders.length)
+
         return this.coders.splice(position,1)[0]
     }
 
@@ -14,6 +15,6 @@ class WheelOfDoom {
     }
 
     restart() {
-        this.coders = this.originalCoders
+        this.coders = [...this.originalCoders]
     }
 }
