@@ -22,7 +22,7 @@ describe('Wheel of Doom', () => {
   it("Cuando hago restart de la wheel of Doom, se recarga la lista original de coders", () => {
     let wheelOfDoom = new WheelOfDoom(["Carmen", "Valentina", "Desi"]);
 
-    wheelOfDoom.chooseCoder;
+    wheelOfDoom.chooseCoder();
     wheelOfDoom.restart();
 
     expect(wheelOfDoom.remainingCoders()).to.have.same.members(["Carmen", "Valentina", "Desi"])
